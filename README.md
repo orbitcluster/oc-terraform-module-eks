@@ -1,3 +1,20 @@
+## Usage
+
+```hcl
+module "eks" {
+  source = "github.com/orbitcluster/oc-terraform-module-eks"
+
+  cluster_name = "example-cluster"
+  env          = "dev"
+  vpc_id       = "vpc-12345678"
+
+  routable_subnet_ids = ["subnet-12345678", "subnet-87654321"]
+
+  extra_nodegroups = {
+    "example-ng" = "t3.medium"
+  }
+}
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
