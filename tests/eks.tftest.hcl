@@ -3,6 +3,10 @@ run "setup" {
   module {
     source = "./tests/setup"
   }
+
+  variables {
+    region = "us-east-1"
+  }
 }
 
 run "plan" {
