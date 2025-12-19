@@ -15,6 +15,58 @@ module "eks" {
   }
 }
 
+## Development
+
+### Pre-commit Hooks
+
+This repository uses [pre-commit](https://pre-commit.com/) to ensure code quality and security.
+
+1.  **Install pre-commit**:
+    ```bash
+    pip install pre-commit
+    ```
+2.  **Install hooks**:
+    ```bash
+    pre-commit install
+    ```
+3.  **Run checks**:
+    ```bash
+    pre-commit run --all-files
+    ```
+
+### Testing
+
+This module uses native Terraform testing (`terraform test`).
+
+To run tests locally:
+
+1.  Ensure you have AWS credentials configured.
+2.  Run the tests:
+    ```bash
+    terraform test
+    ```
+
+## CI/CD
+
+This repository uses GitHub Actions for automated testing and release management.
+
+### Workflows
+
+*   **CI**: Triggered on push to any branch and pull requests.
+    *   Runs `terraform validate`.
+    *   Runs `terraform test` (configuring AWS credentials via secrets).
+*   **Release**: Triggered on push to `main`.
+    *   Uses [Semantic Release](https://github.com/semantic-release/semantic-release) to analyze commit messages.
+    *   Automatically creates a new version tag and GitHub release.
+
+### Secrets
+
+The following GitHub Secrets are required for the CI to function:
+
+*   `OC_ACCESS_KEY_ID`: AWS Access Key ID.
+*   `OC_SECRET_ACCESS_KEY`: AWS Secret Access Key.
+*   `OC_ROLE_TO_ASSUME`: ARN of the IAM role to assume (e.g., `arn:aws:iam::ACCOUNT_ID:role/OrbitClusterEKSAdmin`).
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
