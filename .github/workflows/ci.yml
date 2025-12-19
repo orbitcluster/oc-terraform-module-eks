@@ -1,4 +1,4 @@
-name: "EKS CI"
+name: "eks-ci"
 
 on:
   push:
