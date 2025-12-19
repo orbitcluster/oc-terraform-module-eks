@@ -1,0 +1,12 @@
+data "aws_subnets" "selected" {
+  for_each = toset(var.routable_subnet_ids)
+  id       = each.value
+}
+
+data "aws_ami" "eks"{
+    most_recent = true
+    filter {
+            name = "name"
+            values = [var.ami_type == "AL2023_x86_64_STANDARD" ? "amazon-eks-node-*" : "amazon-eks-node-*"]
+    }
+}
