@@ -38,8 +38,6 @@ jobs:
 
       - name: Terraform Init Setup
         run: terraform init
-        working-directory: tests
 
       - name: Terraform Test
         run: terraform test
-        working-directory: tests
