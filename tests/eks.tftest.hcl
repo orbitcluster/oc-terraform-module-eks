@@ -1,7 +1,7 @@
 
 run "setup" {
   module {
-    source = "./tests/setup"
+    source = "./setup"
   }
 
   variables {
