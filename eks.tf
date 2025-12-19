@@ -1,4 +1,6 @@
+
 module "eks" {
+  # checkov:skip=CKV_TF_1:Using version tags for modules
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
 
