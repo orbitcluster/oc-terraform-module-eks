@@ -36,13 +36,10 @@ jobs:
       - name: Verify AWS Credentials
         run: aws sts get-caller-identity
 
-      - name: Terraform Init
+      - name: Terraform Init Setup
         run: terraform init
-        working-directory: tests/setup
-
-      - name: Terraform Validate Setup
-        run: terraform validate
-        working-directory: tests/setup
+        working-directory: tests
 
       - name: Terraform Test
         run: terraform test
+        working-directory: tests
