@@ -14,9 +14,9 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # to be able to publish a GitHub release
-      issues: write  # to be able to comment on released issues
-      pull-requests: write  # to be able to comment on released pull requests
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
 
     steps:
       - name: Checkout
@@ -28,15 +28,15 @@ jobs:
         id: semantic
         uses: cycjimmy/semantic-release-action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           branch: main
           dry_run: ${{ github.event_name == 'pull_request' }}
 
       - name: Print Version
         env:
-          NEW_RELEASE_PUBLISHED: ${{ steps.semantic.outputs.new_release_published }}  # yamllint disable-line rule:line-length
-          NEW_RELEASE_VERSION: ${{ steps.semantic.outputs.new_release_version }}  # yamllint disable-line rule:line-length
+          NEW_RELEASE_PUBLISHED: ${{ steps.semantic.outputs.new_release_published }} # yamllint disable-line rule:line-length
+          NEW_RELEASE_VERSION: ${{ steps.semantic.outputs.new_release_version }} # yamllint disable-line rule:line-length
 
         run: |
           if [ "$NEW_RELEASE_PUBLISHED" == "true" ]; then
