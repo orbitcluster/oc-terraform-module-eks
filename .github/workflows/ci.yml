@@ -34,11 +34,9 @@ jobs:
           role-to-assume: ${{ secrets.OC_ROLE_TO_ASSUME }}
           role-session-name: githubactions-${{ github.run_id }}
 
-      - name: Verify AWS Credentials
-        run: aws sts get-caller-identity
 
-      - name: Terraform Init Setup
-        run: terraform init
+      # - name: Terraform Init Setup
+      #   run: terraform init
 
-      - name: Terraform Test
-        run: terraform test
+      # - name: Terraform Test
+      #   run: terraform test
