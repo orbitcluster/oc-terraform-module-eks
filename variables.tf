@@ -42,8 +42,8 @@ variable "org_id" {
   default     = "org-1234567890"
 
   validation {
-    condition     = length(var.org_id) == 12 && substr(var.org_id, 0, 4) == "org-"
-    error_message = "Organization ID must be 12 characters long and start with 'org-'"
+    condition     = length(var.org_id) == 14 && substr(var.org_id, 0, 4) == "org-"
+    error_message = "Organization ID must be 14 characters long and start with 'org-'"
   }
 }
 
