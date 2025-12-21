@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout
@@ -33,7 +34,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.OC_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
           role-to-assume: ${{ secrets.OC_ROLE_TO_ASSUME }}
-          role-session-name: GitHubActions-${{ github.run_id }}
+          role-session-name: githubactions-${{ github.run_id }}
 
       - name: Verify AWS Credentials
         run: aws sts get-caller-identity
