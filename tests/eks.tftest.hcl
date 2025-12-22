@@ -13,9 +13,9 @@ run "plan" {
   command = plan
 
   variables {
-    cluster_name = "test-cluster"
-    env          = "test"
-    vpc_id       = run.setup.vpc_id
+    cluster_name        = "test-cluster"
+    env                 = "test"
+    vpc_id              = run.setup.vpc_id
     routable_subnet_ids = run.setup.subnet_ids
     extra_nodegroups = {
       "test-ng" = "t3.medium"

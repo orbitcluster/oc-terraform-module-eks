@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source = "terraform-aws-modules/vpc/aws"
   # checkov:skip=CKV_TF_1: Using version tags for test modules
   version = ">= 5.0.0"
 
