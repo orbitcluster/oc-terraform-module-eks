@@ -8,9 +8,10 @@ module "eks" {
   cluster_name               = local.name
   cluster_kubernetes_version = "1.30"
   vpc_id                     = "<vpc-id>"                       # Placeholder
-  routable_subnet_ids        = ["<subnet-id1>", "<subnet-id2>"] # Placeholder
+  private_subnet_ids         = ["<subnet-id1>", "<subnet-id2>"] # Placeholder
   env                        = "dev"
-  org_id                     = "org-1234567890"
+  bu_id                      = "oc"
+  app_id                     = "eks"
 
   ami_type = "AL2023_x86_64_STANDARD"
 

@@ -36,15 +36,16 @@ variable "extra_nodegroups" {
   description = "Extra nodegroups to use for the cluster"
 }
 
-variable "org_id" {
+variable "bu_id" {
   type        = string
-  description = "Organization ID to use for the cluster"
-  default     = "org-1234567890"
+  description = "Business Unit ID to use for the cluster"
+  default     = null
+}
 
-  validation {
-    condition     = length(var.org_id) == 14 && substr(var.org_id, 0, 4) == "org-"
-    error_message = "Organization ID must be 14 characters long and start with 'org-'"
-  }
+variable "app_id" {
+  type        = string
+  description = "Application ID to use for the cluster"
+  default     = null
 }
 
 variable "private_subnet_ids" {
