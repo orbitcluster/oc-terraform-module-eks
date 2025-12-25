@@ -1,5 +1,5 @@
 data "aws_subnet" "selected" {
-  for_each = toset(var.routable_subnet_ids)
+  for_each = toset(var.private_subnet_ids)
   id       = each.value
 }
 

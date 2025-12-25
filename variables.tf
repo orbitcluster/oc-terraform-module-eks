@@ -47,10 +47,28 @@ variable "org_id" {
   }
 }
 
-variable "routable_subnet_ids" {
+variable "private_subnet_ids" {
   type        = list(string)
-  description = "List of subnet IDs where the EKS cluster plane(ENIs) will be created. It will be used for expanding the pool of subnets used by nodes/node groups without replacing the EKS control plane"
+  description = "List of private subnet IDs where the EKS cluster nodes/ENIs will be created."
   default     = []
+}
+
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs (for load balancers)"
+  type        = list(string)
+  default     = []
+}
+
+variable "node_security_group_id" {
+  description = "Security group ID from the networking module to attach to EKS nodes (in addition to the default one)"
+  type        = string
+  default     = null
+}
+
+variable "cluster_security_group_id" {
+  description = "Security group ID from the networking module to attach to the EKS control plane (in addition to the default one)"
+  type        = string
+  default     = null
 }
 
 variable "target_group_arns" {
