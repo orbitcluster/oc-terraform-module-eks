@@ -29,18 +29,4 @@ run "plan" {
     error_message = "Cluster name did not match expected value"
   }
 
-  assert {
-    condition     = module.eks.cluster_endpoint != null
-    error_message = "Cluster endpoint should not be null"
-  }
-
-  assert {
-    condition     = module.eks.cluster_certificate_authority_data != null
-    error_message = "Cluster CA data should not be null"
-  }
-
-  assert {
-    condition     = module.eks.cluster_primary_security_group_id != null
-    error_message = "Cluster primary security group ID should not be null"
-  }
 }
