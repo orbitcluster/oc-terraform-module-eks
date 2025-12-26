@@ -4,15 +4,16 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
 
-  name                                     = "${var.bu_id}-${var.app_id}-${var.cluster_name}"
-  kubernetes_version                       = var.cluster_kubernetes_version
-  enabled_log_types                        = var.cluster_enabled_log_types
+  name               = "${var.bu_id}-${var.app_id}-eks"
+  kubernetes_version = var.cluster_kubernetes_version
+  enabled_log_types  = var.cluster_enabled_log_types
   # checkov:skip=CKV_TF_1:Using version tags for modules
   # checkov:skip=CKV_AWS_260:Public access required
-  additional_security_group_ids = compact([var.cluster_security_group_id])
+  additional_security_group_ids = compact([var.control_plane_security_group_id])
 
   enable_cluster_creator_admin_permissions = true
   enable_irsa                              = false
+  tags                                     = local.common_tags
 
   addons = {
     kube-proxy = {
@@ -32,8 +33,8 @@ module "eks" {
       ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
       auto_scaling_group_tags = {
-        "k8s.io/cluster-autoscaler/enabled"             = "true"
-        "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-${var.cluster_name}" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                        = "true"
+        "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
       }
 
       iam_role_additional_policies = {
@@ -58,7 +59,7 @@ module "eks" {
       max_size      = var.max_size
       desired_size  = var.desired_size
       instance_type = var.node_instance_type
-      tags          = var.tags
+      tags          = local.common_tags
       capacity_type = "ON_DEMAND"
     }
   }

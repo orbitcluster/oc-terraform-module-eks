@@ -1,40 +1,4 @@
-variable "cluster_access_entries" {
-  description = "Map of cluster access entries to use for the cluster"
-  type        = any
-  default     = {}
-}
-
-variable "cluster_name" {
-  description = "Name to use for the cluster"
-  type        = string
-}
-
-variable "cluster_kubernetes_version" {
-  description = "Kubernetes <major>.<minor> version to use for the cluster"
-  type        = string
-  default     = "1.33"
-}
-
-variable "cluster_control_plane_subnet_ids" {
-  description = "List of subnet IDs to use for the cluster control plane"
-  type        = list(string)
-  default     = null
-}
-
-variable "vpc_id" {
-  description = "VPC ID to use for the cluster"
-  type        = string
-}
-
-variable "env" {
-  type        = string
-  description = "Environment to use for the cluster"
-}
-
-variable "extra_nodegroups" {
-  type        = map(string)
-  description = "Extra nodegroups to use for the cluster"
-}
+################ORG INFO##########################
 
 variable "bu_id" {
   type        = string
@@ -48,34 +12,61 @@ variable "app_id" {
   default     = null
 }
 
+variable "env" {
+  type        = string
+  description = "Environment to use for the cluster"
+}
+
+##################################################
+
+################NETWORKING INFO###################
+
+variable "vpc_id" {
+  description = "VPC ID to use for the cluster"
+  type        = string
+}
+
 variable "private_subnet_ids" {
   type        = list(string)
   description = "List of private subnet IDs where the EKS cluster nodes/ENIs will be created."
   default     = []
 }
 
-variable "public_subnet_ids" {
-  description = "List of public subnet IDs (for load balancers)"
-  type        = list(string)
-  default     = []
+##################################################
+
+################CLUSTER INFO######################
+
+variable "cluster_access_entries" {
+  description = "Map of cluster access entries to use for the cluster"
+  type        = any
+  default     = {}
 }
 
+
+variable "cluster_kubernetes_version" {
+  description = "Kubernetes <major>.<minor> version to use for the cluster"
+  type        = string
+  default     = "1.33"
+}
+
+variable "cluster_control_plane_subnet_ids" {
+  description = "List of subnet IDs to use for the cluster control plane"
+  type        = list(string)
+  default     = null
+}
+
+# Optional: Security group is created by EKS automatically which whitelists/enables communication between EKS control plane and worker nodes
+# If you want to add additional security group rules, you can use this variable
 variable "node_security_group_id" {
   description = "Security group ID from the networking module to attach to EKS nodes (in addition to the default one)"
   type        = string
   default     = null
 }
 
-variable "cluster_security_group_id" {
+variable "control_plane_security_group_id" {
   description = "Security group ID from the networking module to attach to the EKS control plane (in addition to the default one)"
   type        = string
   default     = null
-}
-
-variable "target_group_arns" {
-  type        = list(string)
-  description = "List of ALB target group ARNs to use for the cluster"
-  default     = []
 }
 
 variable "cluster_enabled_log_types" {
