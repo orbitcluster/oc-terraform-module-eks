@@ -25,7 +25,7 @@ run "plan" {
   }
 
   assert {
-    condition     = module.eks.cluster_name == "${run.plan.variables.bu_id}-${run.plan.variables.app_id}-${run.plan.variables.cluster_name}"
+    condition     = module.eks.cluster_name == "test-bu-test-app-test-cluster"
     error_message = "Cluster name did not match expected value"
   }
 
