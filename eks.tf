@@ -71,6 +71,6 @@ resource "aws_security_group_rule" "allow_all_subnet_traffic" {
   to_port           = 443
   protocol          = "tcp"
   security_group_id = module.eks.cluster_security_group_id
-  cidr_blocks       = [for subnet in data.aws_subnet.selected : subnet.cidr_block]
+  cidr_blocks       = var.private_subnet_cidrs
   description       = "Allow all traffic from routable subnets traffic"
 }
