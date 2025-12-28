@@ -32,6 +32,12 @@ variable "private_subnet_ids" {
   default     = []
 }
 
+variable "private_subnet_cidrs" {
+  type        = list(string)
+  description = "List of private subnet CIDRs where the EKS cluster nodes/ENIs will be created."
+  default     = []
+}
+
 ##################################################
 
 ################CLUSTER INFO######################
