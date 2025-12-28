@@ -1,13 +1,47 @@
+################ORG INFO##########################
+
+variable "bu_id" {
+  type        = string
+  description = "Business Unit ID to use for the cluster"
+  default     = null
+}
+
+variable "app_id" {
+  type        = string
+  description = "Application ID to use for the cluster"
+  default     = null
+}
+
+variable "env" {
+  type        = string
+  description = "Environment to use for the cluster"
+}
+
+##################################################
+
+################NETWORKING INFO###################
+
+variable "vpc_id" {
+  description = "VPC ID to use for the cluster"
+  type        = string
+}
+
+variable "private_subnet_ids" {
+  type        = list(string)
+  description = "List of private subnet IDs where the EKS cluster nodes/ENIs will be created."
+  default     = []
+}
+
+##################################################
+
+################CLUSTER INFO######################
+
 variable "cluster_access_entries" {
   description = "Map of cluster access entries to use for the cluster"
   type        = any
   default     = {}
 }
 
-variable "cluster_name" {
-  description = "Name to use for the cluster"
-  type        = string
-}
 
 variable "cluster_kubernetes_version" {
   description = "Kubernetes <major>.<minor> version to use for the cluster"
@@ -21,42 +55,18 @@ variable "cluster_control_plane_subnet_ids" {
   default     = null
 }
 
-variable "vpc_id" {
-  description = "VPC ID to use for the cluster"
+# Optional: Security group is created by EKS automatically which whitelists/enables communication between EKS control plane and worker nodes
+# If you want to add additional security group rules, you can use this variable
+variable "node_security_group_id" {
+  description = "Security group ID from the networking module to attach to EKS nodes (in addition to the default one)"
   type        = string
+  default     = null
 }
 
-variable "env" {
+variable "control_plane_security_group_id" {
+  description = "Security group ID from the networking module to attach to the EKS control plane (in addition to the default one)"
   type        = string
-  description = "Environment to use for the cluster"
-}
-
-variable "extra_nodegroups" {
-  type        = map(string)
-  description = "Extra nodegroups to use for the cluster"
-}
-
-variable "org_id" {
-  type        = string
-  description = "Organization ID to use for the cluster"
-  default     = "org-1234567890"
-
-  validation {
-    condition     = length(var.org_id) == 14 && substr(var.org_id, 0, 4) == "org-"
-    error_message = "Organization ID must be 14 characters long and start with 'org-'"
-  }
-}
-
-variable "routable_subnet_ids" {
-  type        = list(string)
-  description = "List of subnet IDs where the EKS cluster plane(ENIs) will be created. It will be used for expanding the pool of subnets used by nodes/node groups without replacing the EKS control plane"
-  default     = []
-}
-
-variable "target_group_arns" {
-  type        = list(string)
-  description = "List of ALB target group ARNs to use for the cluster"
-  default     = []
+  default     = null
 }
 
 variable "cluster_enabled_log_types" {

@@ -13,4 +13,13 @@ locals {
         EOT
     }
   ]
+
+  common_tags = merge(
+    var.tags,
+    {
+      bu_id  = var.bu_id
+      app_id = var.app_id
+      env    = var.env
+    }
+  )
 }
