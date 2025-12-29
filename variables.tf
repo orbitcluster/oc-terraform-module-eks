@@ -150,3 +150,15 @@ variable "max_pods_per_node" {
   type        = number
   default     = 30
 }
+
+# True: If you want to use EKS to manage your node group.
+#       Automated Lifecycle: AWS creates and manages the EC2 Auto Scaling Group (ASG) for you.
+#       Easy Upgrades: One-click rolling updates. AWS automatically cordons, drains, and terminates nodes to replace them with new versions.
+# False: If you want to manage your node group yourself.
+#       Manual Lifecycle: You define and manage the ASG yourself using Terraform (like in your current code).
+#       Manual Upgrades: You are responsible for cycling nodes (cordoning, draining, and terminating) during upgrades or utilizing ASG "Instance Refresh" features manually.
+variable "is_eks_managed_node_group" {
+  description = "Boolean to enable or disable the EKS node group"
+  type        = bool
+  default     = false
+}
