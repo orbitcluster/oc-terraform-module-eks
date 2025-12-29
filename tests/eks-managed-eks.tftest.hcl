@@ -13,11 +13,12 @@ run "plan" {
   command = plan
 
   variables {
-    env                = "test"
-    bu_id              = "test-bu"
-    app_id             = "test-app"
-    vpc_id             = run.setup.vpc_id
-    private_subnet_ids = run.setup.subnet_ids
+    env                       = "test"
+    bu_id                     = "test-bu"
+    app_id                    = "test-app"
+    vpc_id                    = run.setup.vpc_id
+    private_subnet_ids        = run.setup.subnet_ids
+    is_eks_managed_node_group = true
   }
 
   assert {
