@@ -28,8 +28,9 @@ module "eks" {
 
   access_entries = var.cluster_access_entries
 
-  self_managed_node_groups = {
+  self_managed_node_groups = var.is_eks_managed_node_group ? null : {
     default = {
+      name     = "${var.bu_id}-${var.app_id}-self-mgmt"
       ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
       auto_scaling_group_tags = {
@@ -46,9 +47,9 @@ module "eks" {
       iam_role_permissions_boundary = var.iam_role_permissions_boundary
       vpc_security_group_ids        = compact([var.node_security_group_id])
       pre_bootstrap_user_data       = file("${path.module}/pre-bootstrap-user-data.sh")
-      enable_bootstrap_user_data    = var.ami_type == "AL2_x86_64" ? false : true
-      bootstrap_extra_args          = var.ami_type == "AL2_x86_64" ? false : "--kubelet-extra-args=--node-labels=node.kubernetes.io/instance-type=${var.node_instance_type}, environment=${var.env}"
-      cloudinit_post_nodeadm        = var.ami_type == "AL2_x86_64" ? coalesce(var.cloudinit_post_nodeadm, local.cloudinit_post_nodeadm) : []
+      enable_bootstrap_user_data    = true
+      bootstrap_extra_args          = var.ami_type == "AL2_x86_64" ? "--kubelet-extra-args=--node-labels=node.kubernetes.io/instance-type=${var.node_instance_type}, environment=${var.env}" : null
+      cloudinit_post_nodeadm        = var.ami_type == "AL2_x86_64" ? [] : coalesce(var.cloudinit_post_nodeadm, local.cloudinit_post_nodeadm)
       cloudinit_pre_nodeadm         = var.cloudinit_pre_nodeadm
       launch_template_tags = {
         Environment  = var.env
@@ -63,6 +64,43 @@ module "eks" {
       capacity_type = "ON_DEMAND"
     }
   }
+
+  eks_managed_node_groups = var.is_eks_managed_node_group ? {
+    default = {
+      name     = "${var.bu_id}-${var.app_id}-eks-mgmt"
+      ami_id   = data.aws_ami.eks.id
+      ami_type = var.ami_type
+      auto_scaling_group_tags = {
+        "k8s.io/cluster-autoscaler/enabled"                        = "true"
+        "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
+      }
+
+      iam_role_additional_policies = {
+        ssm        = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        cloudwatch = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+      }
+
+      iam_role_attach_cni_policy    = true
+      iam_role_permissions_boundary = var.iam_role_permissions_boundary
+      vpc_security_group_ids        = compact([var.node_security_group_id])
+      pre_bootstrap_user_data       = file("${path.module}/pre-bootstrap-user-data.sh")
+      enable_bootstrap_user_data    = true
+      bootstrap_extra_args          = var.ami_type == "AL2_x86_64" ? "--kubelet-extra-args=--node-labels=node.kubernetes.io/instance-type=${var.node_instance_type}, environment=${var.env}" : null
+      cloudinit_post_nodeadm        = var.ami_type == "AL2_x86_64" ? [] : coalesce(var.cloudinit_post_nodeadm, local.cloudinit_post_nodeadm)
+      cloudinit_pre_nodeadm         = var.cloudinit_pre_nodeadm
+      launch_template_tags = {
+        Environment  = var.env
+        BusinessUnit = var.bu_id
+        Application  = var.app_id
+      }
+      min_size      = var.min_size
+      max_size      = var.max_size
+      desired_size  = var.desired_size
+      instance_type = var.node_instance_type
+      tags          = local.common_tags
+      capacity_type = "ON_DEMAND"
+    }
+  } : null
 }
 
 resource "aws_security_group_rule" "allow_all_subnet_traffic" {
