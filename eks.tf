@@ -30,7 +30,7 @@ module "eks" {
 
   self_managed_node_groups = var.is_eks_managed_node_group ? null : {
     default = {
-      name     = "${var.bu_id}-${var.app_id}-self-managed-node-group"
+      name     = "${var.bu_id}-${var.app_id}-self-managed"
       ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
       auto_scaling_group_tags = {
@@ -67,7 +67,7 @@ module "eks" {
 
   eks_managed_node_groups = var.is_eks_managed_node_group ? {
     default = {
-      name     = "${var.bu_id}-${var.app_id}-eks-managed-node-group"
+      name     = "${var.bu_id}-${var.app_id}-eks-managed"
       ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
       auto_scaling_group_tags = {
