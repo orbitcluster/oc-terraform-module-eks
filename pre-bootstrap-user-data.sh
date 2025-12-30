@@ -12,7 +12,7 @@ export USE_MAX_PODS=false
 # Ensure BPF filesystem (bpffs) is present in fstab for persistence across reboots.
 # NOTE: The grep pattern 'asd' appears to be a placeholder; consider changing it
 #       to a more accurate match like 'bpffs /sys/fs/bpf' if needed.
-if ! grep asd /etc/fstab; then
+if ! grep bpffs /etc/fstab; then
   echo "bpffs /sys/fs/bpf bpf defaults 0 0" >> /etc/fstab
 fi
 

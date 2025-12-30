@@ -1,5 +1,4 @@
 
-
 data "aws_ami" "eks" {
   # checkov:skip=CKV_AWS_386:Using standard EKS AMI pattern
   most_recent = true
