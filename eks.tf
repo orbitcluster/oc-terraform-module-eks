@@ -70,7 +70,6 @@ module "eks" {
     default = {
       # The node group name gets appended with "-eks-node-group" suffix
       name     = "${var.bu_id}-${var.app_id}-em"
-      ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
       auto_scaling_group_tags = {
         "k8s.io/cluster-autoscaler/enabled"                        = "true"
