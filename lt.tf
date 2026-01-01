@@ -26,7 +26,7 @@ resource "aws_launch_template" "template" {
 
   network_interfaces {
     associate_public_ip_address = false
-    security_groups             = [var.node_security_group_id]
+    security_groups             = compact([var.node_security_group_id])
   }
 
   tag_specifications {
