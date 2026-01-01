@@ -67,36 +67,18 @@ module "eks" {
   }
 
   eks_managed_node_groups = var.is_eks_managed_node_group ? {
-    default = {
+    eks = {
       # The node group name gets appended with "-eks-node-group" suffix
-      name                       = "${var.bu_id}-${var.app_id}-em"
-      launch_template_name       = "${var.bu_id}-${var.app_id}-em"
-      use_custom_launch_template = true
-      ami_type                   = var.ami_type
+      ami_type = var.ami_type
       auto_scaling_group_tags = {
         "k8s.io/cluster-autoscaler/enabled"                        = "true"
         "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
       }
 
-      iam_role_additional_policies = {
-        ssm        = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-        cloudwatch = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-      }
-
       iam_role_attach_cni_policy    = true
       iam_role_permissions_boundary = var.iam_role_permissions_boundary
-      vpc_security_group_ids        = compact([var.node_security_group_id])
+      # vpc_security_group_ids        = compact([var.node_security_group_id])
 
-      labels = {
-        environment   = var.env
-        instance_type = var.node_instance_type
-      }
-
-      launch_template_tags = {
-        Environment  = var.env
-        BusinessUnit = var.bu_id
-        Application  = var.app_id
-      }
       min_size       = var.min_size
       max_size       = var.max_size
       desired_size   = var.desired_size
