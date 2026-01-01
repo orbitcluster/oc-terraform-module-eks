@@ -69,8 +69,9 @@ module "eks" {
   eks_managed_node_groups = var.is_eks_managed_node_group ? {
     default = {
       # The node group name gets appended with "-eks-node-group" suffix
-      name     = "${var.bu_id}-${var.app_id}-em"
-      ami_type = var.ami_type
+      name                       = "${var.bu_id}-${var.app_id}-em"
+      use_custom_launch_template = true
+      ami_type                   = var.ami_type
       auto_scaling_group_tags = {
         "k8s.io/cluster-autoscaler/enabled"                        = "true"
         "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
