@@ -67,24 +67,27 @@ module "eks" {
   }
 
   eks_managed_node_groups = var.is_eks_managed_node_group ? {
-    eks = {
-      # The node group name gets appended with "-eks-node-group" suffix
+    eks-wg = {
       ami_type = var.ami_type
-      auto_scaling_group_tags = {
-        "k8s.io/cluster-autoscaler/enabled"                        = "true"
-        "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
-      }
 
-      iam_role_attach_cni_policy    = true
-      iam_role_permissions_boundary = var.iam_role_permissions_boundary
-      # vpc_security_group_ids        = compact([var.node_security_group_id])
+      launch_template_id      = aws_launch_template.template.id
+      launch_template_version = aws_launch_template.template.latest_version
 
-      min_size       = var.min_size
-      max_size       = var.max_size
-      desired_size   = var.desired_size
-      instance_types = [var.node_instance_type]
-      tags           = local.common_tags
-      capacity_type  = "ON_DEMAND"
+      iam_role_attach_cni_policy            = true
+      iam_role_permissions_boundary         = var.iam_role_permissions_boundary
+      attach_cluster_primary_security_group = true
+
+      min_size     = var.min_size
+      max_size     = var.max_size
+      desired_size = var.desired_size
+      tags = merge(
+        local.common_tags,
+        {
+          "k8s.io/cluster-autoscaler/enabled"                        = "true"
+          "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
+        }
+      )
+      capacity_type = "ON_DEMAND"
     }
   } : null
 }
