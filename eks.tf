@@ -70,6 +70,7 @@ module "eks" {
     default = {
       # The node group name gets appended with "-eks-node-group" suffix
       name                       = "${var.bu_id}-${var.app_id}-em"
+      launch_template_name       = "${var.bu_id}-${var.app_id}-em"
       use_custom_launch_template = true
       ami_type                   = var.ami_type
       auto_scaling_group_tags = {
