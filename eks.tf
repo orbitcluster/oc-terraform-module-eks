@@ -28,6 +28,10 @@ module "eks" {
 
   access_entries = var.cluster_access_entries
 
+  endpoint_private_access      = var.cluster_endpoint_private_access
+  endpoint_public_access       = var.cluster_endpoint_public_access
+  endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
+
   self_managed_node_groups = var.is_eks_managed_node_group ? null : {
     default = {
       # The node group name gets appended with "-node-group" suffix

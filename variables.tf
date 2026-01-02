@@ -48,6 +48,24 @@ variable "cluster_access_entries" {
   default     = {}
 }
 
+variable "cluster_endpoint_private_access" {
+  description = "Enable private API server endpoint access within the VPC"
+  type        = bool
+  default     = true
+}
+
+variable "cluster_endpoint_public_access" {
+  description = "Enable public API server endpoint access. If you are accessing API through kubectl over internet."
+  type        = bool
+  default     = false
+}
+
+variable "cluster_endpoint_public_access_cidrs" {
+  description = "List of CIDR blocks allowed to access the public API server endpoint."
+  type        = list(string)
+  default     = []
+}
+
 
 variable "cluster_kubernetes_version" {
   description = "Kubernetes <major>.<minor> version to use for the cluster"
