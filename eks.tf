@@ -66,30 +66,7 @@ module "eks" {
     }
   }
 
-  eks_managed_node_groups = var.is_eks_managed_node_group ? {
-    eks-wg = {
-      ami_type = var.ami_type
 
-      launch_template_id      = aws_launch_template.template.id
-      launch_template_version = aws_launch_template.template.latest_version
-
-      iam_role_attach_cni_policy            = true
-      iam_role_permissions_boundary         = var.iam_role_permissions_boundary
-      attach_cluster_primary_security_group = true
-
-      min_size     = var.min_size
-      max_size     = var.max_size
-      desired_size = var.desired_size
-      tags = merge(
-        local.common_tags,
-        {
-          "k8s.io/cluster-autoscaler/enabled"                        = "true"
-          "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
-        }
-      )
-      capacity_type = "ON_DEMAND"
-    }
-  } : null
 }
 
 resource "aws_security_group_rule" "allow_all_subnet_traffic" {
