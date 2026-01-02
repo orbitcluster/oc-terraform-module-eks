@@ -28,9 +28,17 @@ module "eks" {
 
   access_entries = var.cluster_access_entries
 
-  endpoint_private_access      = var.cluster_endpoint_private_access
-  endpoint_public_access       = var.cluster_endpoint_public_access
-  endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
+  # Endpoint Access Configuration (derived from access_type)
+  # private: private=true, public=false
+  # private_with_public_cidrs: private=true, public=true with restricted CIDRs
+  # public: private=false, public=true with 0.0.0.0/0
+  endpoint_private_access = var.cluster_endpoint_access_type != "public"
+  endpoint_public_access  = var.cluster_endpoint_access_type != "private"
+  endpoint_public_access_cidrs = (
+    var.cluster_endpoint_access_type == "public" ? ["0.0.0.0/0"] :
+    var.cluster_endpoint_access_type == "private_with_public_cidrs" ? var.cluster_endpoint_public_access_cidrs :
+    []
+  )
 
   self_managed_node_groups = var.is_eks_managed_node_group ? null : {
     default = {
