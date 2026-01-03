@@ -23,3 +23,13 @@ output "cluster_primary_security_group_id" {
   description = "ID of the primary security group for the cluster nodes"
   value       = module.eks.cluster_security_group_id
 }
+
+output "cluster_oidc_provider_arn" {
+  description = "ARN of the OIDC issuer for the cluster"
+  value       = module.eks.oidc_provider_arn
+}
+
+output "cluster_oidc_issuer_url" {
+  description = "URL of the OIDC issuer for the cluster"
+  value       = module.eks.cluster_oidc_issuer_url
+}

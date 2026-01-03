@@ -12,7 +12,7 @@ module "eks" {
   additional_security_group_ids = compact([var.control_plane_security_group_id])
 
   enable_cluster_creator_admin_permissions = true
-  enable_irsa                              = false
+  enable_irsa                              = true
   tags                                     = local.common_tags
 
   addons = {
