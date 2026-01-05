@@ -33,3 +33,8 @@ output "cluster_oidc_issuer_url" {
   description = "URL of the OIDC issuer for the cluster"
   value       = module.eks.cluster_oidc_issuer_url
 }
+
+output "cluster_service_cidr" {
+  description = "Service CIDR for the cluster"
+  value       = module.eks.cluster_service_cidr
+}
