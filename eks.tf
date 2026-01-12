@@ -46,7 +46,7 @@ module "eks" {
       name     = "${var.bu_id}-${var.app_id}-sm"
       ami_id   = data.aws_ami.eks.id
       ami_type = var.ami_type
-      auto_scaling_group_tags = {
+      autoscaling_group_tags  = {
         "k8s.io/cluster-autoscaler/enabled"                        = "true"
         "k8s.io/cluster-autoscaler/${var.bu_id}-${var.app_id}-eks" = "owned"
       }
