@@ -115,6 +115,7 @@ The following GitHub Secrets are required for the CI to function:
 | <a name="input_control_plane_security_group_id"></a> [control\_plane\_security\_group\_id](#input\_control\_plane\_security\_group\_id) | Security group ID from the networking module to attach to the EKS control plane (in addition to the default one) | `string` | `null` | no |
 | <a name="input_desired_size"></a> [desired\_size](#input\_desired\_size) | Desired number of nodes to use for the cluster nodes | `number` | `2` | no |
 | <a name="input_env"></a> [env](#input\_env) | Environment to use for the cluster | `string` | n/a | yes |
+| <a name="input_friendly_name"></a> [friendly\_name](#input\_friendly\_name) | Friendly name for the cluster | `string` | `"root"` | no |
 | <a name="input_iam_role_permissions_boundary"></a> [iam\_role\_permissions\_boundary](#input\_iam\_role\_permissions\_boundary) | IAM role permissions boundary to use for the cluster | `string` | `null` | no |
 | <a name="input_is_eks_managed_node_group"></a> [is\_eks\_managed\_node\_group](#input\_is\_eks\_managed\_node\_group) | Boolean to enable or disable the EKS node group | `bool` | `false` | no |
 | <a name="input_max_pods_per_node"></a> [max\_pods\_per\_node](#input\_max\_pods\_per\_node) | Maximum number of pods to use for the cluster nodes | `number` | `30` | no |

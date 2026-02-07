@@ -12,6 +12,12 @@ variable "app_id" {
   default     = null
 }
 
+variable "friendly_name" {
+  type        = string
+  description = "Friendly name for the cluster"
+  default     = "root"
+}
+
 variable "env" {
   type        = string
   description = "Environment to use for the cluster"
