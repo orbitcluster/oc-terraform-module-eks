@@ -75,13 +75,13 @@ The following GitHub Secrets are required for the CI to function:
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | = 6.31.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.15.0, <= 6.31.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | = 6.31.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.15.0, <= 6.31.0 |
 
 ## Modules
 
@@ -93,9 +93,9 @@ The following GitHub Secrets are required for the CI to function:
 
 | Name | Type |
 |------|------|
-| [aws_launch_template.template](https://registry.terraform.io/providers/hashicorp/aws/6.31.0/docs/resources/launch_template) | resource |
-| [aws_security_group_rule.allow_all_subnet_traffic](https://registry.terraform.io/providers/hashicorp/aws/6.31.0/docs/resources/security_group_rule) | resource |
-| [aws_ami.eks](https://registry.terraform.io/providers/hashicorp/aws/6.31.0/docs/data-sources/ami) | data source |
+| [aws_launch_template.template](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
+| [aws_security_group_rule.allow_all_subnet_traffic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_ami.eks](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 
 ## Inputs
 
